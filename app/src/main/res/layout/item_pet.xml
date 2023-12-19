@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:padding="16dp"
+    android:layout_margin="5dp"
+    android:background="@drawable/bg_stroke_round">
+
+    <ImageView
+        android:id="@+id/pet_img"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:background="@color/light_gray"
+        android:src="@drawable/img_placeholder"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+<!--labels-->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/name_label"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        android:layout_marginStart="16dp"
+        android:text="@string/name"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@id/gender_label"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toEndOf="@id/pet_img"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/gender_label"
+        android:textStyle="bold"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        android:text="@string/gender"
+        app:layout_constraintBottom_toTopOf="@id/type_label"
+        app:layout_constraintTop_toBottomOf="@id/name_label"
+        app:layout_constraintStart_toStartOf="@id/name_label"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/type_label"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:text="@string/type"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/gender_label"
+        app:layout_constraintStart_toStartOf="@id/name_label"/>
+
+<!--    pet data-->
+    <TextView
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/pet_name"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        android:layout_marginStart="6dp"
+        tools:text="@string/app_name"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="@id/name_label"
+        app:layout_constraintTop_toTopOf="@id/name_label"
+        app:layout_constraintStart_toEndOf="@id/name_label"/>
+    <TextView
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/pet_gender"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        android:layout_marginStart="6dp"
+        tools:text="Male"
+        app:layout_constraintBottom_toBottomOf="@id/gender_label"
+        app:layout_constraintTop_toTopOf="@id/gender_label"
+        app:layout_constraintStart_toEndOf="@id/gender_label"/>
+    <TextView
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/pet_type"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        android:layout_marginStart="6dp"
+        tools:text="Cat"
+        app:layout_constraintBottom_toBottomOf="@id/type_label"
+        app:layout_constraintTop_toTopOf="@id/type_label"
+        app:layout_constraintStart_toEndOf="@id/type_label"/>
+</androidx.constraintlayout.widget.ConstraintLayout>

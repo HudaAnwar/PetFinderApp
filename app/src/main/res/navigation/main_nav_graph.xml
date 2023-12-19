@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_nav_graph"
+    app:startDestination="@id/petsFragment">
+
+    <fragment
+        android:id="@+id/petsFragment"
+        android:name="com.huda.petfinderapp.pets_list.PetsFragment"
+        android:label="fragment_pets"
+        tools:layout="@layout/fragment_pets" />
+    <fragment
+        android:id="@+id/petDetailsFragment"
+        android:name="com.huda.petfinderapp.pet_details.PetDetailsFragment"
+        android:label="fragment_pet_details"
+        tools:layout="@layout/fragment_pet_details" />
+</navigation>
