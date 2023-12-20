@@ -9,8 +9,8 @@ import com.huda.domain.common.models.Animal
 import com.huda.domain.pet_list.models.Pagination
 import com.huda.domain.pet_list.models.Type
 import com.huda.domain.pet_list.usecases.GetPetsByTypeUseCase
-import com.huda.domain.pet_list.usecases.GetTokenUseCase
 import com.huda.domain.pet_list.usecases.GetTypesUseCase
+import com.huda.domain.token.usecases.GetTokenUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -31,23 +31,35 @@ class PetsListViewModel @Inject constructor(
     private val _getPetsByTypeResponse = MutableLiveData<ArrayList<Animal>?>()
     val getPetsByTypeResponse:LiveData<ArrayList<Animal>?> get() = _getPetsByTypeResponse
 
+    private val _errorResponse = MutableLiveData<String?>()
+    val errorResponse:LiveData<String?> get() = _errorResponse
+
     private val animals = arrayListOf<Animal>()
 
     private val _pagination=MutableLiveData<Pagination>()
     val pagination:LiveData<Pagination> get() = _pagination
 
-    fun getToken() {
-        viewModelScope.launch {
-            val result = getTokenUseCase.invoke()
-            sharedPref.saveToken(result?.accessToken)
-            _getTokenResponse.postValue(result?.accessToken)
+    suspend fun getToken() {
+        val result = getTokenUseCase.invoke()
+        if (result?.response != null) {
+            sharedPref.saveToken(result.response?.accessToken)
+        } else {
+            _errorResponse.postValue(result?.errorResponse?.detail)
         }
     }
     fun getTypes(){
         viewModelScope.launch {
             val result = getTypesUseCase.invoke()
-            result?.types?.add(0,Type(name = "All"))
-            _getTypesResponse.postValue(result?.types)
+            if (result?.response!=null) {
+                result.response?.types?.add(0,Type(name = "All"))
+                _getTypesResponse.postValue(result.response?.types)
+            }else{
+                if (result?.errorResponse?.title=="Unauthorized"){
+                    getToken()
+                    getTypes()
+                }
+                _errorResponse.postValue(result?.errorResponse?.detail)
+            }
         }
     }
     fun getPetsByType(type:String?=null,page:Int=1) {
@@ -56,11 +68,15 @@ class PetsListViewModel @Inject constructor(
         }
         viewModelScope.launch {
             val result = getPetsByTypeUseCase.invoke(type,page)
-            if (result?.animals?.isNotEmpty() == true) {
-                _pagination.postValue( result.pagination!!)
-                appendAnimals(result.animals) 
-            } else {
-                //handle error
+            if (result?.response!=null) {
+                _pagination.postValue( result.response?.pagination!!)
+                appendAnimals(result.response!!.animals)
+            }else{
+                if (result?.errorResponse?.title=="Unauthorized"){
+                    getToken()
+                    getPetsByType(type,page)
+                }
+                _errorResponse.postValue(result?.errorResponse?.detail)
             }
         }
     }

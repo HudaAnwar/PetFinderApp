@@ -99,6 +99,7 @@ dependencies {
     implementation retrofitDependencies.gson
     implementation retrofitDependencies.scalar
     implementation lottieDependencies.lottie
+    implementation customToastDependencies.core
 
 
 }

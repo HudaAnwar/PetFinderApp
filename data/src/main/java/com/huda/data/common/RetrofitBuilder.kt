@@ -9,10 +9,6 @@ import retrofit2.converter.scalars.ScalarsConverterFactory
 import java.util.concurrent.TimeUnit
 
 class RetrofitBuilder(private val sharedPreferencesManager: SharedPreferencesManager) {
-
-    private val BASE_URL = Constants.BASE_API_URL
-    lateinit var retrofit: Retrofit
-
     fun start(): Retrofit {
             val logging = HttpLoggingInterceptor()
             logging.level = HttpLoggingInterceptor.Level.BODY
@@ -34,17 +30,15 @@ class RetrofitBuilder(private val sharedPreferencesManager: SharedPreferencesMan
                 }
                 .build()
 
-            val gson = GsonBuilder()
-                .setLenient()
-                .create()
+        val gson = GsonBuilder()
+            .setLenient()
+            .create()
 
-            retrofit = Retrofit.Builder().apply {
-                baseUrl(BASE_URL)
-                addConverterFactory(GsonConverterFactory.create(gson))
-                addConverterFactory(ScalarsConverterFactory.create())
-            }.client(okHttpClient).build()
-
-        return retrofit
+        return Retrofit.Builder().apply {
+            baseUrl(Constants.BASE_API_URL)
+            addConverterFactory(GsonConverterFactory.create(gson))
+            addConverterFactory(ScalarsConverterFactory.create())
+        }.client(okHttpClient).build()
     }
 
 }

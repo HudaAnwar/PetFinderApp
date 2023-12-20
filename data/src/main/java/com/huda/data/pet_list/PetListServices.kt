@@ -1,8 +1,8 @@
 package com.huda.data.pet_list
 
-import com.huda.domain.pet_list.requests.TokenRequest
+import com.huda.domain.token.requests.TokenRequest
 import com.huda.domain.pet_list.responses.AnimalsListResponse
-import com.huda.domain.pet_list.responses.TokenResponse
+import com.huda.domain.token.responses.TokenResponse
 import com.huda.domain.pet_list.responses.TypesResponse
 import retrofit2.Response
 import retrofit2.http.Body
@@ -19,9 +19,6 @@ interface PetListServices {
         @Query("type") type: String? = null,
         @Query("page") page: Int = 1
     ): Response<AnimalsListResponse>
-
-    @POST(Constants.get_Token)
-    suspend fun getToken(@Body tokenRequest: TokenRequest):Response<TokenResponse>
 
 }
 

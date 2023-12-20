@@ -36,6 +36,9 @@ class PetDetailsFragment : Fragment() {
         }
     }
     private fun observeViews() {
+        viewModel.errorResponse.observe(viewLifecycleOwner){
+            it?.let { it1 -> Helper.showErrorDialog(requireContext(), it1) }
+        }
         viewModel.getPetResponse.observe(viewLifecycleOwner){
             it?.primaryPhotoCropped?.medium?.let { it1 ->
                 Helper.loadImage(requireContext(),
@@ -45,7 +48,7 @@ class PetDetailsFragment : Fragment() {
             binding.petSize.text = it?.size?:"NA"
             binding.petColor.text = it?.colors?.primary?:"NA"
             "${
-                it?.contact?.address?.city
+                it?.contact?.address?.city?:"NA"
             }, ${
                 it?.contact?.address?.state
             }, ${

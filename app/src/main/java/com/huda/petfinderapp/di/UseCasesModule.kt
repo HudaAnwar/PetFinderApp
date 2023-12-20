@@ -1,14 +1,12 @@
 package com.huda.petfinderapp.di
 
-import com.huda.data.pet_details.PetDetailsServices
-import com.huda.data.pet_list.PetListRepoImpl
-import com.huda.data.pet_list.PetListServices
 import com.huda.domain.pet_details.repository.PetDetailsRepo
 import com.huda.domain.pet_details.usecases.GetPetDetailsUseCase
 import com.huda.domain.pet_list.repository.PetListRepo
 import com.huda.domain.pet_list.usecases.GetPetsByTypeUseCase
-import com.huda.domain.pet_list.usecases.GetTokenUseCase
 import com.huda.domain.pet_list.usecases.GetTypesUseCase
+import com.huda.domain.token.repository.TokenRepo
+import com.huda.domain.token.usecases.GetTokenUseCase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -20,8 +18,8 @@ import javax.inject.Singleton
 object UseCasesModule {
     @Singleton
     @Provides
-    fun provideGetTokenUseCase(petListRepo: PetListRepo): GetTokenUseCase {
-        return GetTokenUseCase(petListRepo)
+    fun provideGetTokenUseCase(tokenRepo: TokenRepo): GetTokenUseCase {
+        return GetTokenUseCase(tokenRepo)
     }
     @Singleton
     @Provides

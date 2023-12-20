@@ -1,30 +1,22 @@
 package com.huda.data.pet_list
 
 import com.huda.data.common.Helper
+import com.huda.domain.common.responses.BaseResponse
 import com.huda.domain.pet_list.repository.PetListRepo
-import com.huda.domain.pet_list.requests.TokenRequest
 import com.huda.domain.pet_list.responses.AnimalsListResponse
-import com.huda.domain.pet_list.responses.TokenResponse
+import com.huda.domain.token.responses.TokenResponse
 import com.huda.domain.pet_list.responses.TypesResponse
 
 class PetListRepoImpl(
-    private val petListServices: PetListServices,
-    private val tokenRequest: TokenRequest
+    private val petListServices: PetListServices
 ) : PetListRepo {
-    override suspend fun getTypes(): TypesResponse? {
+    override suspend fun getTypes(): BaseResponse<TypesResponse> {
         val response = petListServices.getTypes()
-        return Helper.handleUnAuthResponse(response,::getToken,tokenRequest)
+        return Helper.handleErrorResponse(response)
     }
 
-
-
-    override suspend fun getPetsByType(type: String?, page: Int): AnimalsListResponse? {
+    override suspend fun getPetsByType(type: String?, page: Int): BaseResponse<AnimalsListResponse> {
         val response = petListServices.getPetsByType(type, page)
-        return Helper.handleUnAuthResponse(response, ::getToken,tokenRequest)
-    }
-
-    override suspend fun getToken(): TokenResponse? {
-        val response = petListServices.getToken(tokenRequest)
-        return response.body()
+        return Helper.handleErrorResponse(response)
     }
 }

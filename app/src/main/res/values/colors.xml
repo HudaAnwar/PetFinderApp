@@ -5,4 +5,5 @@
     <color name="app_color">#009688</color>
     <color name="light_gray">#DADADA</color>
     <color name="app_color_light">#9FECE4</color>
+    <color name="color_red_4">#ff5353</color>
 </resources>

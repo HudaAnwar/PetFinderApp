@@ -9,13 +9,12 @@ import com.huda.data.common.RetrofitBuilder
 import com.huda.data.common.SharedPreferencesManager
 import com.huda.data.pet_details.PetDetailsServices
 import com.huda.data.pet_list.PetListServices
-import com.huda.domain.pet_list.requests.TokenRequest
+import com.huda.data.token.TokenServices
+import com.huda.domain.token.requests.TokenRequest
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
-import dagger.hilt.android.qualifiers.ActivityContext
 import dagger.hilt.android.qualifiers.ApplicationContext
-import dagger.hilt.android.scopes.ActivityScoped
 import dagger.hilt.components.SingletonComponent
 import retrofit2.Retrofit
 import javax.inject.Singleton
@@ -24,6 +23,11 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 object NetworkModule {
 
+    @Singleton
+    @Provides
+    fun provideTokenService(retrofit: Retrofit): TokenServices {
+        return retrofit.create(TokenServices::class.java)
+    }
     @Singleton
     @Provides
     fun providePetListService(retrofit: Retrofit): PetListServices {

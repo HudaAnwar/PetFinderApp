@@ -1,7 +1,5 @@
 package com.huda.petfinderapp.pets_list
 
-import android.content.pm.ApplicationInfo
-import android.content.pm.PackageManager
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -11,8 +9,8 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.huda.domain.pet_list.requests.TokenRequest
 import com.huda.petfinderapp.databinding.FragmentPetsBinding
+import com.huda.petfinderapp.utils.Helper
 import com.huda.petfinderapp.utils.OnItemClickListener
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -39,7 +37,8 @@ class PetsFragment : Fragment() ,OnItemClickListener{
         setPetsAdapter()
         setTypesAdapter()
         binding.loading.visibility = View.VISIBLE
-        viewModel.getToken()
+        viewModel.getTypes()
+        viewModel.getPetsByType()
     }
 
     private fun setTypesAdapter() {
@@ -74,9 +73,8 @@ class PetsFragment : Fragment() ,OnItemClickListener{
     }
 
     private fun observeViews() {
-        viewModel.getTokenResponse.observe(viewLifecycleOwner){
-            viewModel.getTypes()
-            getPetsByType()
+        viewModel.errorResponse.observe(viewLifecycleOwner){
+            it?.let { it1 -> Helper.showErrorDialog(requireContext(), it1) }
         }
         viewModel.getTypesResponse.observe(viewLifecycleOwner){
             binding.loading.visibility = View.GONE

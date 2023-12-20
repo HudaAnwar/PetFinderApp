@@ -7,31 +7,46 @@ import androidx.lifecycle.viewModelScope
 import com.huda.data.common.SharedPreferencesManager
 import com.huda.domain.common.models.Animal
 import com.huda.domain.pet_details.usecases.GetPetDetailsUseCase
-import com.huda.domain.pet_list.models.Pagination
-import com.huda.domain.pet_list.models.Type
-import com.huda.domain.pet_list.requests.TokenRequest
-import com.huda.domain.pet_list.usecases.GetPetsByTypeUseCase
-import com.huda.domain.pet_list.usecases.GetTokenUseCase
-import com.huda.domain.pet_list.usecases.GetTypesUseCase
+import com.huda.domain.token.usecases.GetTokenUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class PetsDetailsViewModel @Inject constructor(private val getPetDetailsUseCase: GetPetDetailsUseCase):ViewModel() {
+class PetsDetailsViewModel @Inject constructor(
+    private val getPetDetailsUseCase: GetPetDetailsUseCase,
+    private val getTokenUseCase: GetTokenUseCase,
+    private val sharedPref: SharedPreferencesManager
+) :
+    ViewModel() {
 
     private val _getPetResponse = MutableLiveData<Animal?>()
-    val getPetResponse:LiveData<Animal?> get() = _getPetResponse
+    val getPetResponse: LiveData<Animal?> get() = _getPetResponse
+    private val _errorResponse = MutableLiveData<String?>()
+    val errorResponse: LiveData<String?> get() = _errorResponse
 
-
-    fun getPet(petId:Int) {
+    fun getPet(petId: Int) {
         viewModelScope.launch {
             val result = getPetDetailsUseCase.invoke(petId)
-            if (result?.animal!=null) {
-                _getPetResponse.postValue(result.animal)
+            if (result?.response != null) {
+                _getPetResponse.postValue(result.response!!.animal)
+
             } else {
-                //handle error
+                if (result?.errorResponse?.title == "Unauthorized") {
+                    getToken()
+                    getPet(petId)
+                }
+                _errorResponse.postValue(result?.errorResponse?.detail)
             }
+        }
+    }
+
+    private suspend fun getToken() {
+        val result = getTokenUseCase.invoke()
+        if (result?.response != null) {
+            sharedPref.saveToken(result.response?.accessToken)
+        } else {
+            _errorResponse.postValue(result?.errorResponse?.detail)
         }
     }
 }

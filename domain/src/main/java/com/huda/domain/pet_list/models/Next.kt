@@ -8,3 +8,4 @@ data class Next (
   @SerializedName("href" ) var href : String? = null
 
 )
+

@@ -1,4 +1,4 @@
-package com.huda.domain.pet_list.responses
+package com.huda.domain.token.responses
 
 
 import com.google.gson.annotations.SerializedName

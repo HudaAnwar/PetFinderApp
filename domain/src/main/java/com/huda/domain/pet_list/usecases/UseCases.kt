@@ -3,10 +3,6 @@ package com.huda.domain.pet_list.usecases
 import com.huda.domain.pet_list.repository.PetListRepo
 
 
-class GetTokenUseCase(private val petListRepo: PetListRepo) {
-    suspend operator fun invoke() = petListRepo.getToken()
-}
-
 class GetTypesUseCase(private val petListRepo: PetListRepo) {
     suspend operator fun invoke() = petListRepo.getTypes()
 }

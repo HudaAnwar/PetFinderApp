@@ -84,7 +84,10 @@ ext{
             core:"androidx.test.espresso:espresso-core:${espresso_version}"
     ]
 
-
+    custom_toast_version="7.2.4"
+    customToastDependencies=[
+            core:"com.github.tapadoo:alerter:${custom_toast_version}"
+    ]
 
 
 
