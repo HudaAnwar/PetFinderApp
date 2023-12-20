@@ -1,22 +1,29 @@
 plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
+    id 'androidx.navigation.safeargs.kotlin'
+    id 'kotlin-kapt'
 }
+
+apply from: '../dependencies.gradle'
 
 android {
     namespace 'com.huda.petfinderapp'
     compileSdk 33
-
     defaultConfig {
         applicationId "com.huda.petfinderapp"
         minSdk 26
         targetSdk 33
         versionCode 1
-        versionName "1.0"
-
+        versionName "1.0.0"
+        multiDexEnabled true
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
-
+    bundle {
+        language {
+            enableSplit = false
+        }
+    }
     buildTypes {
         release {
             minifyEnabled false
@@ -30,24 +37,61 @@ android {
     kotlinOptions {
         jvmTarget = '1.8'
     }
-    buildFeatures{
+    buildFeatures {
         viewBinding true
         dataBinding true
     }
+
 }
 
 dependencies {
 
-    implementation 'androidx.core:core-ktx:1.8.0'
-    implementation 'androidx.appcompat:appcompat:1.6.1'
-    implementation 'com.google.android.material:material:1.5.0'
-    implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
-    implementation 'androidx.navigation:navigation-fragment:2.7.6'
-    testImplementation 'junit:junit:4.13.2'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.5'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
-    testImplementation "com.google.truth:truth:1.1.4"
+    implementation kotlinDependencies.core
+    implementation constraintDependencies.core
+    implementation androidxDependencies.core
+
+    testImplementation juintDependencies.core
+    androidTestImplementation testDependencies.core
+    androidTestImplementation espressoDependencies.core
 
     implementation project(path: ':data')
     implementation project(path: ':domain')
+
+    //lifeCycle
+    implementation lifecycleDependencies.viewModel
+    implementation lifecycleDependencies.liveData
+    //bottomBar
+    implementation navDependencies.fragment
+    implementation navDependencies.ui
+    implementation navDependencies.dynamicFeatures
+    implementation navDependencies.testing
+    //glide
+    implementation glideDependencies.glide
+    implementation glideDependencies.annotation
+
+
+    //material
+    implementation materialDepdencies.material
+
+    implementation httpOkDependencies.httpOK
+
+
+
+
+    implementation(platform("org.jetbrains.kotlin:kotlin-bom:1.8.0"))
+
+
+    testImplementation "com.google.truth:truth:1.1.5"
+
+    implementation 'com.google.dagger:hilt-android:2.41'
+    kapt 'com.google.dagger:hilt-compiler:2.41'
+
+    // For instrumentation tests
+    androidTestImplementation 'com.google.dagger:hilt-android-testing:2.41'
+    androidTestAnnotationProcessor 'com.google.dagger:hilt-compiler:2.41'
+
+    // For local unit tests
+    testImplementation 'com.google.dagger:hilt-android-testing:2.41'
+    testAnnotationProcessor 'com.google.dagger:hilt-compiler:2.41'
+
 }
