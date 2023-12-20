@@ -9,4 +9,6 @@
     <string name="color">Color</string>
     <string name="address">Address</string>
     <string name="pet_s_website">Pet\'s Website</string>
+    <string name="pet_details">Pet Details</string>
+    <string name="pets">Pets</string>
 </resources>
