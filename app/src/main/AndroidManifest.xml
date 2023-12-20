@@ -14,6 +14,13 @@
         android:theme="@style/Theme.PetFinderApp"
         tools:targetApi="31"
         tools:replace="android:theme">
+
+        <meta-data
+            android:name="client_id"
+            android:value="ebOlh41JQWZ3NunQ7dzzP08fsL5DChGCL5969hPlgeIBuqQexj" />
+        <meta-data
+            android:name="client_secret"
+            android:value="mJJzLGjCUDCLA67X97ckHNpeopQ1dNUd08StK5Xi" />
         <activity
             android:name=".MainActivity"
             android:exported="true">
