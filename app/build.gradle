@@ -79,7 +79,7 @@ dependencies {
 
 
 
-    implementation(platform("org.jetbrains.kotlin:kotlin-bom:1.8.0"))
+//    implementation(platform("org.jetbrains.kotlin:kotlin-bom:1.6.21"))
 
 
     testImplementation "com.google.truth:truth:1.1.5"
@@ -98,5 +98,7 @@ dependencies {
     implementation retrofitDependencies.retrofit
     implementation retrofitDependencies.gson
     implementation retrofitDependencies.scalar
+    implementation lottieDependencies.lottie
+
 
 }

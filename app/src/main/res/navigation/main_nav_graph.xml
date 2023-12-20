@@ -14,5 +14,25 @@
         android:id="@+id/petDetailsFragment"
         android:name="com.huda.petfinderapp.pet_details.PetDetailsFragment"
         android:label="fragment_pet_details"
-        tools:layout="@layout/fragment_pet_details" />
+        tools:layout="@layout/fragment_pet_details" >
+        <argument
+            android:name="petId"
+            app:argType="integer" />
+    </fragment>
+
+    <action android:id="@+id/view_petsDetails"
+        app:destination="@id/petDetailsFragment"/>
+
+    <action android:id="@+id/view_petsWebsite"
+        app:destination="@id/previewPetWebsiteFragment"/>
+
+    <fragment
+        android:id="@+id/previewPetWebsiteFragment"
+        android:name="com.huda.petfinderapp.pet_details.PreviewPetWebsiteFragment"
+        android:label="fragment_preview_pet_website"
+        tools:layout="@layout/fragment_preview_pet_website" >
+        <argument
+            android:name="url"
+            app:argType="string" />
+    </fragment>
 </navigation>

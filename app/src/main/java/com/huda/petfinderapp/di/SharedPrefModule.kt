@@ -6,21 +6,23 @@ import com.huda.data.common.SharedPreferencesManager
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
-import dagger.hilt.android.components.ActivityComponent
 import dagger.hilt.android.qualifiers.ActivityContext
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.android.scopes.ActivityScoped
+import dagger.hilt.components.SingletonComponent
+import javax.inject.Singleton
 
 @Module
-@InstallIn(ActivityComponent::class)
+@InstallIn(SingletonComponent::class)
 object SharedPrefModule {
 
     @Provides
-    @ActivityScoped
-    fun provideSharedPref(@ActivityContext context: Context): SharedPreferences? {
+    @Singleton
+    fun provideSharedPref(@ApplicationContext context: Context): SharedPreferences {
         return context.getSharedPreferences("PetFinderApp",Context.MODE_PRIVATE)
     }
     @Provides
-    @ActivityScoped
+    @Singleton
     fun provideSharedPrefManager(sharedPreferences: SharedPreferences): SharedPreferencesManager {
         return SharedPreferencesManager(sharedPreferences)
     }

@@ -11,13 +11,11 @@ import java.util.concurrent.TimeUnit
 class RetrofitBuilder(private val sharedPreferencesManager: SharedPreferencesManager) {
 
     private val BASE_URL = Constants.BASE_API_URL
-    var retrofit: Retrofit? = null
+    lateinit var retrofit: Retrofit
 
-    fun start(): Retrofit? {
-        if (retrofit == null) {
+    fun start(): Retrofit {
             val logging = HttpLoggingInterceptor()
             logging.level = HttpLoggingInterceptor.Level.BODY
-
 
             val okHttpClient = OkHttpClient().newBuilder()
                 .connectTimeout(30, TimeUnit.SECONDS)
@@ -27,9 +25,9 @@ class RetrofitBuilder(private val sharedPreferencesManager: SharedPreferencesMan
                 .addInterceptor { chain ->
                     val original = chain.request()
                     val request = original.newBuilder()
-                        .addHeader("Authorization", "Bearer "+sharedPreferencesManager.getToken())
+                        .addHeader("Authorization", "Bearer " + sharedPreferencesManager.getToken())
                         .addHeader("Accept", "application/json")
-                       .addHeader("Api-Version", "v1")
+                        .addHeader("Api-Version", "v1")
                         .method(original.method, original.body)
                         .build()
                     chain.proceed(request)
@@ -40,14 +38,12 @@ class RetrofitBuilder(private val sharedPreferencesManager: SharedPreferencesMan
                 .setLenient()
                 .create()
 
-              retrofit = Retrofit.Builder().apply {
+            retrofit = Retrofit.Builder().apply {
                 baseUrl(BASE_URL)
                 addConverterFactory(GsonConverterFactory.create(gson))
                 addConverterFactory(ScalarsConverterFactory.create())
             }.client(okHttpClient).build()
 
-
-        }
         return retrofit
     }
 

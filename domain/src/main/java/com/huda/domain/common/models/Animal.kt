@@ -24,7 +24,7 @@ data class Animal (
   @SerializedName("organization_animal_id" ) var organizationAnimalId : String?              = null,
   @SerializedName("photos"                 ) var photos               : ArrayList<Photos>    = arrayListOf(),
   @SerializedName("primary_photo_cropped"  ) var primaryPhotoCropped  : PrimaryPhotoCropped? = PrimaryPhotoCropped(),
-  @SerializedName("videos"                 ) var videos               : ArrayList<String>    = arrayListOf(),
+  @SerializedName("videos"                 ) var videos               : ArrayList<Any>    = arrayListOf(),
   @SerializedName("status"                 ) var status               : String?              = null,
   @SerializedName("status_changed_at"      ) var statusChangedAt      : String?              = null,
   @SerializedName("published_at"           ) var publishedAt          : String?              = null,

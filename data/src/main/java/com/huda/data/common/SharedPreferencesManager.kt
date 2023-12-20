@@ -9,8 +9,6 @@ class SharedPreferencesManager(private val prefs: SharedPreferences) {
 
     private val TOKEN = "TOKEN"
 
-
-
     fun getToken(): String = prefs.getString(TOKEN, " ")!!
 
     fun saveToken(value: String?) {

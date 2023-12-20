@@ -6,6 +6,7 @@ import com.huda.data.pet_list.PetListRepoImpl
 import com.huda.data.pet_list.PetListServices
 import com.huda.domain.pet_details.repository.PetDetailsRepo
 import com.huda.domain.pet_list.repository.PetListRepo
+import com.huda.domain.pet_list.requests.TokenRequest
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -18,14 +19,18 @@ object RepositoryModule {
     @Singleton
     @Provides
     fun providePetListRepository(
-        petListServices: PetListServices): PetListRepo {
-        return PetListRepoImpl(petListServices)
+        petListServices: PetListServices,tokenRequest: TokenRequest
+    ): PetListRepo {
+        return PetListRepoImpl(petListServices,tokenRequest)
     }
 
    @Singleton
     @Provides
-    fun providePetDetailsRepository(petDetailsServices: PetDetailsServices): PetDetailsRepo {
-        return PetDetailsRepoImpl(petDetailsServices)
+   fun providePetDetailsRepository(
+       petDetailsServices: PetDetailsServices,
+       tokenRequest: TokenRequest
+   ): PetDetailsRepo {
+        return PetDetailsRepoImpl(petDetailsServices,tokenRequest)
     }
 
 }

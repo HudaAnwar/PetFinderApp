@@ -1,12 +1,16 @@
 ext{
 
-    kotlin_version="1.10.0"
+    kotlin_version="1.6.21"
     kotlinDependencies=[
             core:"androidx.core:core-ktx:${kotlin_version}"
     ]
     androidx_version="1.6.1"
     androidxDependencies=[
             core:"androidx.appcompat:appcompat:${androidx_version}"
+    ]
+    lottie_version="5.2.0"
+    lottieDependencies=[
+            lottie:"com.airbnb.android:lottie:${lottie_version}"
     ]
     material_version="1.9.0"
     materialDependencies=[

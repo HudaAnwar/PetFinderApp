@@ -39,14 +39,20 @@ class MainActivity : AppCompatActivity() {
     private fun setupNavigation() {
         onDestinationChangedListener =
             NavController.OnDestinationChangedListener { _, destination, _ ->
-                binding.toolbar.toolbarTitle.text = if (destination.id == R.id.petDetailsFragment ) {
-                    binding.toolbar.toolbarHome.navigationIcon = null
-                    getString(R.string.pet_details)
-                } else {
-                    binding.toolbar.toolbarHome.navigationIcon =
-                        AppCompatResources.getDrawable(this, R.drawable.ic_arrow_back)
-                    getString(R.string.pets)
+                var icon= AppCompatResources.getDrawable(this, R.drawable.ic_arrow_back)
+                binding.toolbar.toolbarTitle.text = when (destination.id) {
+                    R.id.petDetailsFragment -> {
+                        getString(R.string.pet_details)
+                    }
+                    R.id.previewPetWebsiteFragment -> {
+                        getString(R.string.pet_s_website)
+                    }
+                    else -> {
+                        icon = null
+                        getString(R.string.pets)
+                    }
                 }
+                binding.toolbar.toolbarHome.navigationIcon = icon
             }
 
         navController.addOnDestinationChangedListener(onDestinationChangedListener)
