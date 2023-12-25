@@ -16,6 +16,7 @@ object Helper {
             .placeholder(R.drawable.img_placeholder)
             .error(R.drawable.img_placeholder)
             .fallback(R.drawable.img_placeholder)
+            .dontAnimate()
             .into(photo)
     }
     fun showErrorDialog(context: Context, message: String) {

@@ -63,6 +63,7 @@ class PetDetailsFragment : Fragment() {
     private fun initViews() {
         val bundle = arguments?:return
         val args = PetDetailsFragmentArgs.fromBundle(bundle)
+        viewModel.fetchPet(args.petId)
         viewModel.getPet(args.petId)
     }
 

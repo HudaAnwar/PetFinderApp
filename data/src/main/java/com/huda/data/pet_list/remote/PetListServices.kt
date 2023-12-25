@@ -1,13 +1,10 @@
-package com.huda.data.pet_list
+package com.huda.data.pet_list.remote
 
-import com.huda.domain.token.requests.TokenRequest
+import com.huda.data.pet_list.Constants
 import com.huda.domain.pet_list.responses.AnimalsListResponse
-import com.huda.domain.token.responses.TokenResponse
 import com.huda.domain.pet_list.responses.TypesResponse
 import retrofit2.Response
-import retrofit2.http.Body
 import retrofit2.http.GET
-import retrofit2.http.POST
 import retrofit2.http.Query
 
 interface PetListServices {

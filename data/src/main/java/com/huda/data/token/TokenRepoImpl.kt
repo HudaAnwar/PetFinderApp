@@ -13,6 +13,6 @@ class TokenRepoImpl(
 
     override suspend fun getToken(): BaseResponse<TokenResponse> {
         val response = tokenServices.getToken(tokenRequest)
-        return Helper.handleErrorResponse(response)
+        return Helper.handleErrorResponse(response, null)
     }
 }

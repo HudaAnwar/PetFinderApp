@@ -1,12 +1,9 @@
-package com.huda.data.pet_details
+package com.huda.data.pet_details.remote
 
+import com.huda.data.pet_details.Constants
 import com.huda.domain.pet_details.responses.AnimalDetailsResponse
-import com.huda.domain.token.requests.TokenRequest
-import com.huda.domain.token.responses.TokenResponse
 import retrofit2.Response
-import retrofit2.http.Body
 import retrofit2.http.GET
-import retrofit2.http.POST
 import retrofit2.http.Path
 
 interface PetDetailsServices {

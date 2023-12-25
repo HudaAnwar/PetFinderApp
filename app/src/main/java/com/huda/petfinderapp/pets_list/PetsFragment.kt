@@ -37,7 +37,9 @@ class PetsFragment : Fragment() ,OnItemClickListener{
         setPetsAdapter()
         setTypesAdapter()
         binding.loading.visibility = View.VISIBLE
+        viewModel.fetchTypes()
         viewModel.getTypes()
+        viewModel.fetchPetsByType()
         viewModel.getPetsByType()
     }
 
@@ -56,7 +58,7 @@ class PetsFragment : Fragment() ,OnItemClickListener{
                 val lastVisibleItemPosition = layoutManager.findLastVisibleItemPosition()
                 val totalItemCount = layoutManager.itemCount
                 if (lastVisibleItemPosition == totalItemCount - 1) {
-                    val hasMorePage = viewModel.pagination.value?.currentPage!! < (viewModel.pagination.value?.totalPages?:0)
+                    val hasMorePage =( viewModel.pagination.value?.currentPage?:0) < (viewModel.pagination.value?.totalPages?:0)
                     if (hasMorePage) {
                         binding.pagingLoadingImg.visibility=View.VISIBLE
                         getPetsByType(viewModel.pagination.value?.currentPage!! + 1)
@@ -83,7 +85,14 @@ class PetsFragment : Fragment() ,OnItemClickListener{
         viewModel.getPetsByTypeResponse.observe(viewLifecycleOwner){
             binding.loading.visibility = View.GONE
             binding.pagingLoadingImg.visibility = View.GONE
-            it?.let { it1 -> petsAdapter.updatePets(it1) }
+            if (!it.isNullOrEmpty()){
+                binding.rvPets.visibility = View.VISIBLE
+                binding.noData.visibility = View.GONE
+                petsAdapter.updatePets(it)
+            }else{
+                binding.rvPets.visibility = View.GONE
+                binding.noData.visibility = View.VISIBLE
+            }
         }
     }
 
@@ -96,6 +105,7 @@ class PetsFragment : Fragment() ,OnItemClickListener{
     override fun onClick(name: String) {
         selectedType = if (name=="All")  null else name
         getPetsByType(1)
+        viewModel.fetchPetsByType(selectedType)
     }
     private fun getPetsByType(page: Int=1) {
         viewModel.getPetsByType(selectedType, page)

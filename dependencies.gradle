@@ -88,7 +88,13 @@ ext{
     customToastDependencies=[
             core:"com.github.tapadoo:alerter:${custom_toast_version}"
     ]
+    room_version = "2.5.2"
+    roomDependencies=[
+            runtime:"androidx.room:room-runtime:$room_version",
+            compiler:"androidx.room:room-compiler:$room_version",
+            ktx:"androidx.room:room-ktx:$room_version",
+            coroutine:"org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.2"
 
-
+    ]
 
 }

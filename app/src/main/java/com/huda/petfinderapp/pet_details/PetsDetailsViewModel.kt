@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.huda.data.common.SharedPreferencesManager
 import com.huda.domain.common.models.Animal
+import com.huda.domain.pet_details.usecases.FetchPetDetailsUseCase
 import com.huda.domain.pet_details.usecases.GetPetDetailsUseCase
 import com.huda.domain.token.usecases.GetTokenUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -16,6 +17,7 @@ import javax.inject.Inject
 class PetsDetailsViewModel @Inject constructor(
     private val getPetDetailsUseCase: GetPetDetailsUseCase,
     private val getTokenUseCase: GetTokenUseCase,
+    private val fetchPetDetailsUseCase: FetchPetDetailsUseCase,
     private val sharedPref: SharedPreferencesManager
 ) :
     ViewModel() {
@@ -37,6 +39,14 @@ class PetsDetailsViewModel @Inject constructor(
                     getPet(petId)
                 }
                 _errorResponse.postValue(result?.errorResponse?.detail)
+            }
+        }
+    }
+    fun fetchPet(petId: Int) {
+        viewModelScope.launch {
+            val animal = fetchPetDetailsUseCase.invoke(petId)
+            if (animal.id != null) {
+                _getPetResponse.postValue(animal)
             }
         }
     }

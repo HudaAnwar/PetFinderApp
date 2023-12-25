@@ -8,6 +8,8 @@ import com.huda.data.common.SharedPreferencesManager
 import com.huda.domain.common.models.Animal
 import com.huda.domain.pet_list.models.Pagination
 import com.huda.domain.pet_list.models.Type
+import com.huda.domain.pet_list.usecases.FetchPetsByTypeUseCase
+import com.huda.domain.pet_list.usecases.FetchTypesUseCase
 import com.huda.domain.pet_list.usecases.GetPetsByTypeUseCase
 import com.huda.domain.pet_list.usecases.GetTypesUseCase
 import com.huda.domain.token.usecases.GetTokenUseCase
@@ -19,7 +21,9 @@ import javax.inject.Inject
 class PetsListViewModel @Inject constructor(
     private val getTokenUseCase: GetTokenUseCase,
     private val getTypesUseCase: GetTypesUseCase,
+    private val fetchTypesUseCase: FetchTypesUseCase,
     private val getPetsByTypeUseCase: GetPetsByTypeUseCase,
+    private val fetchPetsByTypeUseCase: FetchPetsByTypeUseCase,
     private val sharedPref: SharedPreferencesManager
 ):ViewModel() {
     private val _getTokenResponse = MutableLiveData<String?>()
@@ -39,7 +43,7 @@ class PetsListViewModel @Inject constructor(
     private val _pagination=MutableLiveData<Pagination>()
     val pagination:LiveData<Pagination> get() = _pagination
 
-    suspend fun getToken() {
+    private suspend fun getToken() {
         val result = getTokenUseCase.invoke()
         if (result?.response != null) {
             sharedPref.saveToken(result.response?.accessToken)
@@ -62,6 +66,15 @@ class PetsListViewModel @Inject constructor(
             }
         }
     }
+    fun fetchTypes(){
+        viewModelScope.launch {
+            val types = fetchTypesUseCase.invoke()
+            if (types.isNotEmpty()) {
+                 types.add(0,Type(name = "All"))
+                _getTypesResponse.postValue(types)
+            }
+        }
+    }
     fun getPetsByType(type:String?=null,page:Int=1) {
         if (page == 1) {
             animals.clear()
@@ -78,6 +91,12 @@ class PetsListViewModel @Inject constructor(
                 }
                 _errorResponse.postValue(result?.errorResponse?.detail)
             }
+        }
+    }
+    fun fetchPetsByType(type:String?=null) {
+        viewModelScope.launch {
+            val animals = fetchPetsByTypeUseCase.invoke(type)
+            _getPetsByTypeResponse.postValue(animals)
         }
     }
 

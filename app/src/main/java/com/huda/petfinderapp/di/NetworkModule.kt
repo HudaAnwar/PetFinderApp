@@ -7,8 +7,8 @@ import android.content.pm.ApplicationInfo
 import android.content.pm.PackageManager
 import com.huda.data.common.RetrofitBuilder
 import com.huda.data.common.SharedPreferencesManager
-import com.huda.data.pet_details.PetDetailsServices
-import com.huda.data.pet_list.PetListServices
+import com.huda.data.pet_details.remote.PetDetailsServices
+import com.huda.data.pet_list.remote.PetListServices
 import com.huda.data.token.TokenServices
 import com.huda.domain.token.requests.TokenRequest
 import dagger.Module

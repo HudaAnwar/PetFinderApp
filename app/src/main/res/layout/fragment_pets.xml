@@ -17,6 +17,7 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:listitem="@layout/item_type" />
 
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_pets"
         android:layout_width="match_parent"
@@ -38,7 +39,16 @@
         app:lottie_autoPlay="true"
         app:lottie_loop="true"
         app:lottie_rawRes="@raw/lottie_pager_loading" />
-
+    <TextView
+        android:id="@+id/no_data"
+        android:textAlignment="center"
+        android:gravity="center"
+        android:textColor="@color/black"
+        android:textSize="25sp"
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:text="@string/no_data_found" />
     <ProgressBar
         android:id="@+id/loading"
         android:layout_width="wrap_content"
